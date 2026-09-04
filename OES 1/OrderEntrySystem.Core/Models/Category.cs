@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OrderEntrySystem.Core
+namespace OrderEntrySystem.Core.Models
 {
     public class Category
     {

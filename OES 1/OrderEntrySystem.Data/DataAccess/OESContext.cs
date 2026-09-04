@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrderEntrySystem.Core;
+using OrderEntrySystem.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

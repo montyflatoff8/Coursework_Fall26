@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace OrderEntrySystem.Core
+namespace OrderEntrySystem.Core.Models
 {
     public class Customer
     {

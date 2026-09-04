@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OrderEntrySystem.Core.Enumerations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OrderEntrySystem.Core
+namespace OrderEntrySystem.Core.Models
 {
     public class Product
     {
@@ -25,8 +26,15 @@ namespace OrderEntrySystem.Core
         public decimal Price { get; set; }
 
         [Required]
+        public Condition Condition { get; set; }
+
+        [Required]
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
+
+        [Required]
+        [ForeignKey("Location")]
+        public string? LocationDescription { get; set; }
 
         public Category? Category { get; set; }
     }

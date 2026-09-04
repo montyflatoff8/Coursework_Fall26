@@ -1,5 +1,5 @@
-﻿using OrderEntrySystem.Core;
-using OrderEntrySystem.Core.Interfaces;
+﻿using OrderEntrySystem.Core.Interfaces;
+using OrderEntrySystem.Core.Models;
 
 namespace OrderEntrySystem.Api.Repositories
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using OrderEntrySystem.Core;
 using OrderEntrySystem.Core.Interfaces;
+using OrderEntrySystem.Core.Models;
 using System.Runtime.CompilerServices;
 
 namespace OrderEntrySystem.Web.Services

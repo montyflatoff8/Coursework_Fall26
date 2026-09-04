@@ -1,4 +1,4 @@
-﻿using OrderEntrySystem.Core;
+﻿using OrderEntrySystem.Core.Models;
 
 namespace OrderEntrySystem.Web.Services
 {

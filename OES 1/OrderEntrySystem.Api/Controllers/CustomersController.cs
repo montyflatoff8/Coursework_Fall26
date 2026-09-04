@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderEntrySystem.Api.Repositories;
-using OrderEntrySystem.Core;
 using OrderEntrySystem.Core.Interfaces;
+using OrderEntrySystem.Core.Models;
 
 namespace OrderEntrySystem.Api.Controllers
 {

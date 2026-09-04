@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OrderEntrySystem.Core;
+using OrderEntrySystem.Core.Models;
 using OrderEntrySystem.Web.Services;
 
 namespace OrderEntrySystem.Web.Pages.Products

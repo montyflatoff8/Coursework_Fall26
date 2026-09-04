@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrderEntrySystem.Core;
 using OrderEntrySystem.Core.Interfaces;
+using OrderEntrySystem.Core.Models;
 using OrderEntrySystem.Data.DataAccess;
 using System;
 using System.Collections.Generic;
