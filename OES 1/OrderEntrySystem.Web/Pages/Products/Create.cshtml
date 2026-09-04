@@ -1,0 +1,32 @@
+﻿@page
+@model OrderEntrySystem.Web.Pages.Products.CreateModel
+@{
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="Product.Name" class="form-label"></label>
+            <input asp-for="Product.Name" class="form-control" placeholder="Product Name" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.Description" class="form-label"></label>
+            <input asp-for="Product.Description" class="form-control" placeholder="Product Description" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.Quantity" class="form-label"></label>
+            <input asp-for="Product.Quantity" class="form-control" placeholder="Product Quantity" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.Price" class="form-label"></label>
+            <input asp-for="Product.Price" class="form-control" placeholder="Product Price" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.CategoryId" class="form-label">Category</label>
+            <select asp-for="Product.CategoryId" asp-items="Model.CategoryOptions" class="form-select">
+                <option placeholder="">-- Select a category --</option>
+            </select>
+            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+}

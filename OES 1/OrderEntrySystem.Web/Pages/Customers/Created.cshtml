@@ -1,0 +1,20 @@
+﻿@page
+@model OrderEntrySystem.Web.Pages.Customers.CreatedModel
+@{
+    ViewData["Title"] = "Customer Created";
+    <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+        <i class="ti ti-check"></i>
+        Customer added to customer list
+    </div>
+    <div class="card" style="max-width: 480px;">
+        <div class="card-header">
+            @Model.Customer.Name
+        </div>
+        <div class="card-body p-0">
+            <table class="table mb-0">
+                <tr> <th>Name</th> <td>@Model.Customer.Name</td> </tr>
+                <tr> <th>Address</th> <td>@Model.Customer.Address</td> </tr>
+            </table>
+        </div>
+    </div>
+}

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="OrderEntrySystem.Api/OrderEntrySystem.Api.csproj" />
+  <Project Path="OrderEntrySystem.Core/OrderEntrySystem.Core.csproj" />
+  <Project Path="OrderEntrySystem.Web/OrderEntrySystem.Web.csproj" />
+  <Project Path="OrderEntrySystem.Data/OrderEntrySystem.Data.csproj" Id="445fb678-425a-4d45-8e01-e8b3da5b639d" />
+</Solution>

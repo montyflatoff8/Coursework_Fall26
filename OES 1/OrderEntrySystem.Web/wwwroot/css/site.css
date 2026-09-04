@@ -1,0 +1,311 @@
+/* ==========================================================================
+   OrderEntrySystem.Web — site.css
+   A quiet, professional look for an internal shop data/viewing app.
+   Palette: slate navy + warm neutrals. Data (prices, quantities, SKUs)
+   gets a light monospace treatment to read like a clean inventory ledger.
+
+   BOOTSTRAP 5 INTEGRATION
+   Instead of overriding every Bootstrap class with hardcoded values,
+   this file maps the palette onto Bootstrap 5's CSS custom properties
+   (--bs-*). Because Bootstrap's own components (buttons, alerts, forms,
+   dropdowns, pagination, badges, etc.) read from those variables,
+   the theme now applies everywhere automatically — not just to the
+   classes explicitly styled below.
+
+   Load order: this file must come AFTER bootstrap.min.css so these
+   variable overrides take effect.
+   ========================================================================== */
+
+:root {
+    /* ---- Core palette (source of truth) ---- */
+    --ink: #1f2933; /* primary text */
+    --ink-soft: #5f6b7a; /* secondary text */
+    --surface: #ffffff; /* cards, table rows */
+    --bg: #f6f7f9; /* page background */
+    --border: #e2e5ea; /* hairline borders */
+    --border-strong: #d3d8df;
+    --navy: #22384f; /* primary brand */
+    --navy-dark: #182a3c;
+    --steel: #3b6488; /* interactive accent, links */
+    --steel-dark: #2f5271;
+    --accent-teal: #2f7a6b; /* in-stock / positive */
+    --accent-amber: #b5791f; /* low stock / warning */
+    --accent-red: #b3423a; /* out of stock / error */
+
+    --font-body: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-data: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --radius: 6px;
+    --shadow-sm: 0 1px 2px rgba(31, 41, 51, 0.06);
+    --shadow-md: 0 4px 16px rgba(31, 41, 51, 0.08);
+    /* ---- Bootstrap 5 variable overrides ----
+       These feed the palette above into Bootstrap's own components. */
+    --bs-body-bg: var(--bg);
+    --bs-body-color: var(--ink);
+    --bs-body-font-family: var(--font-body);
+    --bs-emphasis-color: var(--navy);
+    --bs-secondary-color: var(--ink-soft);
+    --bs-border-color: var(--border);
+    --bs-border-radius: var(--radius);
+    --bs-border-radius-sm: 4px;
+    --bs-border-radius-lg: 8px;
+    --bs-box-shadow: var(--shadow-md);
+    --bs-box-shadow-sm: var(--shadow-sm);
+    --bs-primary: var(--steel);
+    --bs-primary-rgb: 59, 100, 136;
+    --bs-primary-text-emphasis: var(--steel-dark);
+    --bs-primary-bg-subtle: #e9eff4;
+    --bs-primary-border-subtle: var(--border-strong);
+    --bs-secondary: var(--navy);
+    --bs-secondary-rgb: 34, 56, 79;
+    --bs-success: var(--accent-teal);
+    --bs-success-rgb: 47, 122, 107;
+    --bs-warning: var(--accent-amber);
+    --bs-warning-rgb: 181, 121, 31;
+    --bs-danger: var(--accent-red);
+    --bs-danger-rgb: 179, 66, 58;
+    --bs-link-color: var(--steel);
+    --bs-link-color-rgb: 59, 100, 136;
+    --bs-link-hover-color: var(--steel-dark);
+    --bs-link-hover-color-rgb: 47, 82, 113;
+    --bs-focus-ring-color: rgba(59, 100, 136, 0.25);
+}
+
+/* ---------- Base ---------- */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--navy);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+}
+
+h2 {
+    font-size: 1.35rem;
+}
+
+.text-muted {
+    color: var(--ink-soft) !important;
+}
+
+a:focus-visible,
+button:focus-visible,
+.form-control:focus-visible {
+    outline: 2px solid var(--steel);
+    outline-offset: 2px;
+}
+
+/* ---------- Navbar ----------
+   Bootstrap's .bg-dark / .navbar-dark utilities already read --bs-*,
+   so pair this class with those utilities in markup:
+   <nav class="navbar navbar-dark bg-dark"> or use .navbar-brand-custom below. */
+
+.navbar {
+    background-color: var(--navy) !important;
+    box-shadow: var(--shadow-sm);
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    color: #ffffff !important;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.82) !important;
+    font-size: 0.9rem;
+}
+
+    .navbar .nav-link:hover,
+    .navbar .nav-link.active {
+        color: #ffffff !important;
+    }
+
+/* .nav-pills active state now inherits --bs-primary automatically;
+   no manual override needed. */
+
+/* ---------- Buttons ----------
+   .btn-primary, .btn-outline-secondary, etc. now pull color from
+   --bs-primary / --bs-border-radius above. Only non-variable tweaks
+   (size, weight) stay here. */
+
+.btn {
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.45rem 1rem;
+}
+
+/* ---------- Cards / surfaces ----------
+   .card already uses --bs-border-color and --bs-border-radius.
+   Only the surface color and header weight need stating. */
+
+.card {
+    background-color: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+    background-color: var(--surface);
+    font-weight: 600;
+    color: var(--navy);
+}
+
+.box-shadow {
+    box-shadow: var(--shadow-md);
+}
+
+/* ---------- Product / data tables ---------- */
+
+.table {
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+    .table thead th {
+        background-color: var(--bg);
+        color: var(--ink-soft);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        border-bottom: 1px solid var(--border-strong);
+        padding: 0.7rem 1rem;
+    }
+
+    .table tbody td {
+        padding: 0.65rem 1rem;
+        vertical-align: middle;
+        color: var(--ink);
+    }
+
+    .table tbody tr:hover {
+        background-color: var(--bg);
+    }
+
+    /* Numeric / data-driven columns get the ledger treatment */
+    .table td.data,
+    .table td.price,
+    .table td.qty,
+    .table td.sku {
+        font-family: var(--font-data);
+        font-variant-numeric: tabular-nums;
+        color: var(--navy);
+    }
+
+    .table td.price {
+        font-weight: 600;
+    }
+
+/* Simple stock-status pill, optional use.
+   Colors reuse --bs-success / --bs-warning / --bs-danger rgb triplets
+   so they stay in sync with the theme automatically. */
+.badge-stock {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-family: var(--font-data);
+}
+
+    .badge-stock.in-stock {
+        color: var(--bs-success);
+        background-color: rgba(var(--bs-success-rgb), 0.1);
+    }
+
+    .badge-stock.low-stock {
+        color: var(--bs-warning);
+        background-color: rgba(var(--bs-warning-rgb), 0.12);
+    }
+
+    .badge-stock.out-of-stock {
+        color: var(--bs-danger);
+        background-color: rgba(var(--bs-danger-rgb), 0.1);
+    }
+
+/* ---------- Forms ----------
+   .form-control / .form-select already inherit --bs-border-color,
+   --bs-border-radius, and --bs-focus-ring-color. Only font-size and
+   the focus glow need a nudge here. */
+
+.form-control,
+.form-select {
+    font-size: 0.9rem;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--steel);
+        box-shadow: 0 0 0 3px rgba(59, 100, 136, 0.15);
+    }
+
+.form-label,
+label {
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* asp-validation-for / ModelState errors — Bootstrap targets these via
+   .text-danger, but ASP.NET's tag helpers emit their own classes too. */
+.text-danger,
+.field-validation-error,
+.validation-summary-errors {
+    color: var(--accent-red) !important;
+}
+
+.input-validation-error {
+    border-color: var(--accent-red) !important;
+}
+
+    .input-validation-error:focus {
+        box-shadow: 0 0 0 3px rgba(179, 66, 58, 0.15) !important;
+    }
+
+/* ---------- Misc ---------- */
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background-color: var(--surface);
+    border-top: 1px solid var(--border);
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+}
+
+/* ---------- Motion & accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}

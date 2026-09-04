@@ -1,0 +1,22 @@
+﻿@page
+@model OrderEntrySystem.Web.Pages.Products.CreatedModel
+@{
+    ViewData["Title"] = "Product Created";
+    <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+        <i class="ti ti-check"></i>
+        Product added to product list
+    </div>
+    <div class="card" style="max-width: 480px;">
+        <div class="card-header">
+            @Model.Product.Name
+        </div>
+        <div class="card-body p-0">
+            <table class="table mb-0">
+                <tr> <th>Name</th> <td>@Model.Product.Name</td> </tr>
+                <tr> <th>Description</th> <td>@Model.Product.Description</td> </tr>
+                <tr> <th>Quantity</th> <td>@Model.Product.Quantity</td> </tr>
+                <tr> <th>Price</th> <td>@Model.Product.Price</td> </tr>
+            </table>
+        </div>
+    </div>
+}
