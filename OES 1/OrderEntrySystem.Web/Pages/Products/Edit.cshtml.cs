@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using OrderEntrySystem.Core.Enumerations;
 using OrderEntrySystem.Core.Models;
 using OrderEntrySystem.Web.Services;
 
@@ -22,6 +23,8 @@ namespace OrderEntrySystem.Web.Pages.Products
         public Product Product { get; set; } = new();
 
         public SelectList CategoryOptions { get; set; }
+        public SelectList ConditionOptions { get; set; } = new SelectList(Enum.GetValues(typeof(Condition)).Cast<Condition>());
+
 
         public async Task<IActionResult> OnGetAsync(int id)
         {

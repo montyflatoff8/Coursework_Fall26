@@ -49,6 +49,7 @@ namespace OrderEntrySystem.Data.Repositories
             existing.Quantity = updatedProduct.Quantity;
             existing.Price = updatedProduct.Price;
             existing.CategoryId = updatedProduct.CategoryId;
+            existing.Condition = updatedProduct.Condition;
 
             context.SaveChanges();
             return existing;

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderEntrySystem.Data.DataAccess;
 
@@ -10,9 +11,11 @@ using OrderEntrySystem.Data.DataAccess;
 namespace OrderEntrySystem.Data.Migrations
 {
     [DbContext(typeof(OESContext))]
-    partial class OESContextModelSnapshot : ModelSnapshot
+    [Migration("20260905051859_LocationProperty")]
+    partial class LocationProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

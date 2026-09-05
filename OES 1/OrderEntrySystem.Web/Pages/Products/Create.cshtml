@@ -20,13 +20,22 @@
             <input asp-for="Product.Price" class="form-control" placeholder="Product Price" />
         </div>
         <div class="mb-3">
+            <label asp-for="Product.Location" class="form-label"></label>
+            <input asp-for="Product.Location" class="form-control" placeholder="Product Location" />
+        </div>
+        <div class="mb-3">
             <label asp-for="Product.CategoryId" class="form-label">Category</label>
             <select asp-for="Product.CategoryId" asp-items="Model.CategoryOptions" class="form-select">
                 <option placeholder="">-- Select a category --</option>
             </select>
             <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
         </div>
-
+        <div class="mb-3">
+            <label asp-for="Product.Condition" class="form-label">Condition</label>
+            <select asp-for="Product.Condition" asp-items="Model.ConditionOptions" class="form-select">
+				<option placeholder="">-- Select a condition --</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
 }

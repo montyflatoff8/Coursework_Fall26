@@ -32,9 +32,8 @@ namespace OrderEntrySystem.Core.Models
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
 
-        [Required]
-        [ForeignKey("Location")]
-        public string? LocationDescription { get; set; }
+        [Column(TypeName = "varchar(100)")]
+        public string Location { get; set; }
 
         public Category? Category { get; set; }
     }
