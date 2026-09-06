@@ -26,6 +26,11 @@ builder.Services.AddHttpClient<LocationApiClient>(client =>
     client.BaseAddress = new Uri("https://localhost:7007");
 });
 
+builder.Services.AddHttpClient<OrderApiClient>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7007");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

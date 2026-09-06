@@ -1,0 +1,20 @@
+﻿@page
+@model OrderEntrySystem.Web.Pages.Orders.CreateModel
+@{
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="Order.Status" class="form-label">Order Status</label>
+            <select asp-for="Order.Status" asp-items="Model.OrderStatusOptions" class="form-select">
+				<option placeholder="">-- Select an order status --</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Order.CustomerId" class="form-label">Customer</label>
+            <select asp-for="Order.CustomerId" asp-items="Model.CustomerOptions" class="form-select">
+				<option placeholder="">-- Select a customer --</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+}

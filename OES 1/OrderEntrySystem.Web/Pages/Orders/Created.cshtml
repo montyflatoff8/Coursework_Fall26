@@ -1,0 +1,24 @@
+﻿@page
+@model OrderEntrySystem.Web.Pages.Orders.CreatedModel
+@{
+    ViewData["Title"] = "Order Created";
+    <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+        <i class="ti ti-check"></i>
+        Order added to order list
+    </div>
+    <div class="mb-3">
+        <a asp-page="./Index" class="btn btn-sm btn-outline-secondary">Order List</a>
+    </div>
+    <div class="card" style="max-width: 480px;">
+        <div class="card-header">
+            @Model.Order.Id
+        </div>
+        <div class="card-body p-0">
+            <table class="table mb-0">
+                <tr> <th>Order ID</th> <td>@Model.Order.Id</td> </tr>
+                <tr> <th>Order Status</th> <td>@Model.Order.Status</td> </tr>
+                <tr> <th>Customer</th> <td>@Model.Order.Customer?.Name</td> </tr>
+            </table>
+        </div>
+    </div>
+}

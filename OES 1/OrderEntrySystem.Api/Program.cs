@@ -32,6 +32,8 @@ builder.Services.AddScoped<ICustomerRepository, EfCustomerRepository>();
 
 builder.Services.AddScoped<ILocationRepository, EfLocationRepository>();
 
+builder.Services.AddScoped<IOrderRepository, EfOrderRepository>();
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
