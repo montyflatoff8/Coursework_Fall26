@@ -13,10 +13,13 @@ namespace OrderEntrySystem.Web.Pages.Products
 
         private readonly CategoryApiClient categoryClient;
 
-        public EditModel(ProductApiClient productClient, CategoryApiClient categoryClient)
+        private readonly LocationApiClient locationClient;
+
+        public EditModel(ProductApiClient productClient, CategoryApiClient categoryClient, LocationApiClient locationClient)
         {
             this.productClient = productClient;
             this.categoryClient = categoryClient;
+            this.locationClient = locationClient;
         }
 
         [BindProperty]
@@ -24,6 +27,7 @@ namespace OrderEntrySystem.Web.Pages.Products
 
         public SelectList CategoryOptions { get; set; }
         public SelectList ConditionOptions { get; set; } = new SelectList(Enum.GetValues(typeof(Condition)).Cast<Condition>());
+        public SelectList LocationOptions { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -37,6 +41,9 @@ namespace OrderEntrySystem.Web.Pages.Products
 
             var categories = await categoryClient.GetCategoriesAsync();
             CategoryOptions = new SelectList(categories, "Id", "Name", Product.CategoryId);
+
+            var locations = await locationClient.GetLocationsAsync();
+            LocationOptions = new SelectList(locations, "Id", "Name", Product.LocationId);
 
             this.Product = product;
             return Page(); // re-renders current page

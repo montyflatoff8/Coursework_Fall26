@@ -17,7 +17,6 @@ namespace OrderEntrySystem.Core.Models
         [Column(TypeName = "varchar(250)")]
         public string Description { get; set; } = string.Empty;
 
-        [Required]
         [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
@@ -28,13 +27,14 @@ namespace OrderEntrySystem.Core.Models
         [Required]
         public Condition Condition { get; set; }
 
-        [Required]
+
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-
-        [Column(TypeName = "varchar(100)")]
-        public string Location { get; set; }
-
         public Category? Category { get; set; }
+
+
+        [ForeignKey("Location")]
+        public int LocationId { get; set; }
+        public Location? Location { get; set; }
     }
 }

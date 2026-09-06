@@ -21,5 +21,11 @@ namespace OrderEntrySystem.Web.Pages.Locations
         {
             this.Locations = await this.client.GetLocationsAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            await client.DeleteLocationAsync(id);
+            return RedirectToPage("./Index");
+        }
     }
 }

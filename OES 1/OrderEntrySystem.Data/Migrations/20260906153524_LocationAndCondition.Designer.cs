@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderEntrySystem.Data.DataAccess;
 
@@ -10,9 +11,11 @@ using OrderEntrySystem.Data.DataAccess;
 namespace OrderEntrySystem.Data.Migrations
 {
     [DbContext(typeof(OESContext))]
-    partial class OESContextModelSnapshot : ModelSnapshot
+    [Migration("20260906153524_LocationAndCondition")]
+    partial class LocationAndCondition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,8 +105,9 @@ namespace OrderEntrySystem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(250)");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -119,8 +123,6 @@ namespace OrderEntrySystem.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("LocationId");
-
                     b.ToTable("Products");
                 });
 
@@ -132,23 +134,10 @@ namespace OrderEntrySystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OrderEntrySystem.Core.Models.Location", "Location")
-                        .WithMany("Products")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("OrderEntrySystem.Core.Models.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("OrderEntrySystem.Core.Models.Location", b =>
                 {
                     b.Navigation("Products");
                 });

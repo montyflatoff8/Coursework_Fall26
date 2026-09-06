@@ -11,8 +11,6 @@ namespace OrderEntrySystem.Core.Models
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string Name { get; set; } = string.Empty;
-
-
         public IEnumerable<Product> Products { get; set; }
     }
 }

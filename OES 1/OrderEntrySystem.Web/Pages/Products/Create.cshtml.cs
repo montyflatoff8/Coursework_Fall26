@@ -15,10 +15,13 @@ namespace OrderEntrySystem.Web.Pages.Products
 
         private readonly CategoryApiClient categoryClient;
 
-        public CreateModel(ProductApiClient productClient, CategoryApiClient categoryClient)
+        private readonly LocationApiClient locationClient;
+
+        public CreateModel(ProductApiClient productClient, CategoryApiClient categoryClient, LocationApiClient locationClient)
         {
             this.productClient = productClient;
             this.categoryClient = categoryClient;
+            this.locationClient = locationClient;
         }
 
         [BindProperty]
@@ -28,10 +31,15 @@ namespace OrderEntrySystem.Web.Pages.Products
 
         public SelectList ConditionOptions { get; set; } = new SelectList(Enum.GetValues(typeof(Condition)).Cast<Condition>());
 
+        public SelectList LocationOptions { get; set; }
+
         public async Task OnGetAsync()
         {
             var categories = await categoryClient.GetCategoriesAsync();
             CategoryOptions = new SelectList(categories, "Id", "Name");
+
+            var locations = await locationClient.GetLocationsAsync();
+            LocationOptions = new SelectList(locations, "Id", "Name");
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -41,6 +49,9 @@ namespace OrderEntrySystem.Web.Pages.Products
                 // dropdown data doesn't survive postback on its own — rebuild it before redisplaying
                 var categories = await categoryClient.GetCategoriesAsync();
                 CategoryOptions = new SelectList(categories, "Id", "Name", Product.CategoryId);
+
+                var locations = await locationClient.GetLocationsAsync();
+                LocationOptions = new SelectList(locations, "Id", "Name", Product.LocationId);
                 return Page();
             }
 

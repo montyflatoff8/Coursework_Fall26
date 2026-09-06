@@ -19,40 +19,40 @@ namespace OrderEntrySystem.Data.Repositories
 
         public IEnumerable<Product> GetAll()
         {
-            return context.Products.Include(p => p.Category).ToList(); // need .Include so that Ef knows to populate it.
+            return context.Products.Include(p => p.Category).Include(p => p.Location).ToList(); // need .Include so that Ef knows to populate it.
         }
 
-        public Product Add(Product product)
+        public Product? Add(Product product)
         {
             context.Products.Add(product);
             context.SaveChanges();
-            return product;
+            return GetById(product.Id);
         }
 
         public Product? GetById(int id)
         {
-            return context.Products.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
+            return context.Products.Include(p => p.Category).Include(p => p.Location).FirstOrDefault(p => p.Id == id);
         }
 
         public Product? Update(int id, Product updatedProduct)
         {
-            var existing = context.Products.FirstOrDefault(p => p.Id == id); //grab the matching product from the database
+            var existing = context.Products.FirstOrDefault(p => p.Id == id);
 
             if (existing == null)
             {
                 return null;
             }
 
-            // Replace the properties of the existing product with the updated values
             existing.Name = updatedProduct.Name;
             existing.Description = updatedProduct.Description;
             existing.Quantity = updatedProduct.Quantity;
             existing.Price = updatedProduct.Price;
             existing.CategoryId = updatedProduct.CategoryId;
             existing.Condition = updatedProduct.Condition;
+            existing.LocationId = updatedProduct.LocationId;
 
             context.SaveChanges();
-            return existing;
+            return GetById(id);
         }
 
         public Product? Delete(int id)

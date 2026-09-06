@@ -20,8 +20,11 @@
             <input asp-for="Product.Price" class="form-control" placeholder="Product Price" />
         </div>
         <div class="mb-3">
-            <label asp-for="Product.Location" class="form-label"></label>
-            <input asp-for="Product.Location" class="form-control" placeholder="Product Location" />
+            <label asp-for="Product.LocationId" class="form-label">Location</label>
+            <select asp-for="Product.LocationId" asp-items="Model.LocationOptions" class="form-select">
+                <option placeholder="">-- Select a location --</option>
+            </select>
+            <span asp-validation-for="Product.LocationId" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Product.CategoryId" class="form-label">Category</label>
