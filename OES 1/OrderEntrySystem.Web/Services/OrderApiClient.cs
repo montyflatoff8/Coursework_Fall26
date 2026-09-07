@@ -33,6 +33,12 @@ namespace OrderEntrySystem.Web.Services
             return await response.Content.ReadFromJsonAsync<Order>();
         }
 
+        public async Task<IEnumerable<Order>> GetOrdersByCustomerAsync(int customerId)
+        {
+            var orders = await GetOrdersAsync();
+            return orders.Where(o => o.CustomerId == customerId);
+        }
+
         public async Task<Order> CreateOrderAsync(Order order)
         {
             var response = await http.PostAsJsonAsync("https://localhost:7007/api/orders", order);
