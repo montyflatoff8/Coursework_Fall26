@@ -1,6 +1,8 @@
 ﻿@page
 @model OrderEntrySystem.Web.Pages.Orders.CreateModel
 @{
+    ViewData["Title"] = "Create Order";
+}
     <div asp-validation-summary="All" class="text-danger"></div>
     <form method="post">
         <div class="mb-3">
@@ -17,4 +19,3 @@
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
-}

@@ -1,6 +1,8 @@
 ﻿@page "{id:int}" /* This line specifies that the page expects an integer parameter named "id" in the URL. */
 @model OrderEntrySystem.Web.Pages.Products.EditModel
-
+@{
+    ViewData["Title"] = "Edit Product";
+}
 <form method="post">
     <input type="hidden" asp-for="Product.Id" />
     <div class="mb-3">

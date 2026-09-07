@@ -1,7 +1,10 @@
 ﻿@page
 @model OrderEntrySystem.Web.Pages.Customers.CreateModel
 @{
+    ViewData["Title"] = "Create Customer";
+}
     <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="mb-3">
             <label asp-for="Customer.Name" class="form-label"></label>
             <input asp-for="Customer.Name" class="form-control" placeholder="Customer Name" />
@@ -13,4 +16,3 @@
 
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
-}

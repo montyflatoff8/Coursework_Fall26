@@ -14,6 +14,6 @@ namespace OrderEntrySystem.Core.Models
         [Required]
         public string Address { get; set; } = string.Empty;
 
-        public IEnumerable<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
