@@ -1,0 +1,38 @@
+﻿@page
+@model OrderEntrySystem.Web.Pages.OrderLines.IndexModel
+@{
+    ViewData["Title"] = "Order Lines";
+}
+
+<h1>Lines for @Model.OrderSummary</h1>
+
+<div class="mb-3">
+    <a asp-page="/OrderLines/Create" asp-route-orderId="@Model.OrderId" class="btn btn-sm btn-primary">Add Line</a>
+    <a asp-page="/Orders/Edit" asp-route-id="@Model.OrderId" class="btn btn-sm btn-outline-secondary">Back to Order</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.OrderLines)
+        {
+            <tr>
+                <td>@line.Product?.Name</td>
+                <td>@line.Quantity</td>
+                <td>
+                    <a asp-page="/OrderLines/Edit" asp-route-id="@line.Id" asp-route-orderId="@line.OrderId" class="btn btn-sm btn-secondary">Edit</a>
+                    <form asp-page="./Index" asp-page-handler="Delete" asp-route-id="@line.Id" asp-route-orderId="@Model.OrderId" method="post" style="display:inline"
+                          onsubmit="return confirm('Remove this line?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

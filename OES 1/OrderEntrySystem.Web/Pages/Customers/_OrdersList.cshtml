@@ -1,5 +1,4 @@
-﻿@using OrderEntrySystem.Core.Models
-@model IEnumerable<Order>
+﻿@model OrderEntrySystem.Web.Pages.Customers.OrdersListViewModel
 
 <h2>Orders</h2>
 <table class="table">
@@ -11,13 +10,30 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var order in Model)
+        @foreach (var order in Model.Orders)
         {
+            var hasLines = Model.OrderIdsWithLines.Contains(order.Id);
+
             <tr>
                 <td>@order.Id</td>
                 <td>@order.Status</td>
                 <td>
                     <a asp-page="/Orders/Edit" asp-route-id="@order.Id" asp-route-customerId="@order.CustomerId" class="btn btn-sm btn-outline-secondary">Edit</a>
+
+                    @if (hasLines)
+                    {
+                        <button type="button" class="btn btn-sm btn-outline-danger" disabled
+                                title="This order has existing order lines and cannot be deleted.">
+                            Order Lines Exist
+                        </button>
+                    }
+                    else
+                    {
+                        <form asp-page-handler="DeleteOrder" asp-route-orderId="@order.Id" asp-route-customerId="@order.CustomerId" method="post" style="display:inline"
+                              onsubmit="return confirm('Are you sure you want to delete this order?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    }
                 </td>
             </tr>
         }

@@ -40,6 +40,8 @@
                 <td>@c.Address</td>
                 <td>@c.Orders.Count()</td>
                 <td>
+                    <a asp-page="/Customers/Details" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Details</a>
+
                     @if (hasOrders)
                     {
                         <button type="button" class="btn btn-sm btn-outline-danger" disabled

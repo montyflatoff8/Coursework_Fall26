@@ -11,10 +11,8 @@
     <input type="hidden" asp-for="Order.CustomerId" />
     <input type="hidden" asp-for="CustomerId" />
 
-    <div class="mb-3">
-        <label asp-for="Order.Status" class="form-label">Order Status</label>
-        <select asp-for="Order.Status" asp-items="Model.OrderStatusOptions" class="form-select"></select>
-    </div>
-
     <button type="submit" class="btn btn-primary">Save changes</button>
+    <a asp-page="/OrderLines/Create" asp-route-orderId="@Model.Order.Id" class="btn btn-sm btn-primary">Add Line</a>
 </form>
+
+<partial name="_OrderLinesList" model="Model.OrderLines" />

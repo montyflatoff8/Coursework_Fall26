@@ -22,5 +22,7 @@ namespace OrderEntrySystem.Data.DataAccess
         public DbSet<Location> Locations { get; set; }
 
         public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderLine> OrderLines { get; set; }
     }
 }

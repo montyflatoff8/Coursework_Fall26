@@ -59,7 +59,7 @@ namespace OrderEntrySystem.Web.Pages.Orders
 
             if (CustomerId.HasValue)
             {
-                return RedirectToPage("/Customers/Details", new { id = CustomerId.Value });
+                return RedirectToPage("/OrderLines/Create", new { orderId = created.Id });
             }
 
             return RedirectToPage("./Created", new { id = created.Id });

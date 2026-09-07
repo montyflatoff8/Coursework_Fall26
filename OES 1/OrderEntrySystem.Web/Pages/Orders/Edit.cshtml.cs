@@ -13,10 +13,13 @@ namespace OrderEntrySystem.Web.Pages.Orders
 
         private readonly CustomerApiClient customerClient;
 
-        public EditModel(OrderApiClient orderClient, CustomerApiClient customerClient)
+        private readonly OrderLineApiClient orderLineClient;
+
+        public EditModel(OrderApiClient orderClient, CustomerApiClient customerClient, OrderLineApiClient orderLineClient)
         {
             this.orderClient = orderClient;
             this.customerClient = customerClient;
+            this.orderLineClient = orderLineClient;
         }
 
         [BindProperty]
@@ -27,6 +30,8 @@ namespace OrderEntrySystem.Web.Pages.Orders
         public int CustomerId { get; set; }
 
         public string? CustomerName { get; set; }
+
+        public IEnumerable<OrderLine> OrderLines { get; set; }
 
         public SelectList OrderStatusOptions { get; set; } = new SelectList(Enum.GetValues(typeof(OrderStatus)).Cast<OrderStatus>());
 
@@ -41,6 +46,9 @@ namespace OrderEntrySystem.Web.Pages.Orders
 
             this.Order = order;
 
+
+
+            OrderLines = await orderLineClient.GetOrderLinesByOrderAsync(Order.Id);
             var customer = await customerClient.GetCustomerAsync(CustomerId);
             CustomerName = customer?.Name;
 
@@ -63,7 +71,13 @@ namespace OrderEntrySystem.Web.Pages.Orders
                 return NotFound();
             }
 
-            return RedirectToPage("/Customers/Details", new { id = CustomerId });
+            return RedirectToPage("/Customers/Details", new { id = Order.CustomerId });
+        }
+
+        public async Task<IActionResult> OnPostDeleteLineAsync(int id, int lineId)
+        {
+            await orderLineClient.DeleteOrderLineAsync(lineId);
+            return RedirectToPage(new { id });
         }
     }
 }

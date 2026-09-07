@@ -1,0 +1,29 @@
+﻿@page
+@model OrderEntrySystem.Web.Pages.OrderLines.EditModel
+@{
+    ViewData["Title"] = "Edit Order Line";
+}
+
+<h1>Edit Line on @Model.OrderSummary</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="OrderId" />
+
+    <div class="mb-3">
+        <label asp-for="OrderLine.ProductId" class="form-label">Product</label>
+        <select asp-for="OrderLine.ProductId" asp-items="Model.ProductOptions" class="form-select">
+            <option value="">-- Select Product --</option>
+        </select>
+        <span asp-validation-for="OrderLine.ProductId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OrderLine.Quantity" class="form-label">Quantity</label>
+        <input asp-for="OrderLine.Quantity" class="form-control" />
+        <span asp-validation-for="OrderLine.Quantity" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="/OrderLines/Index" asp-route-orderId="@Model.OrderId" class="btn btn-secondary">Cancel</a>
+</form>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace OrderEntrySystem.Core.Models
 {
@@ -16,6 +17,7 @@ namespace OrderEntrySystem.Core.Models
         [ForeignKey("Order")]
         public int OrderId { get; set; }
 
+        [JsonIgnore] // Prevents circular reference during JSON serialization
         public Order? Order { get; set; }
 
         [ForeignKey("Product")]

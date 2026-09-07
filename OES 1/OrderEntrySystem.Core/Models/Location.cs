@@ -20,6 +20,6 @@ namespace OrderEntrySystem.Core.Models
         [Column(TypeName = "varchar(100)")]
         public string State { get; set; } = string.Empty;
 
-        public IEnumerable<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

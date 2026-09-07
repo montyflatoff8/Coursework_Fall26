@@ -19,7 +19,7 @@ namespace OrderEntrySystem.Data.Repositories
 
         public IEnumerable<Order> GetAll()
         {
-            return context.Orders.Include(o => o.Customer).ToList();
+            return context.Orders.Include(o => o.Customer).Include(o => o.OrderLines).ThenInclude(ol => ol.Product).ToList();
         }
 
         public Order Add(Order order)
@@ -31,7 +31,7 @@ namespace OrderEntrySystem.Data.Repositories
 
         public Order? GetById(int id)
         {
-            return context.Orders.Include(o => o.Customer).FirstOrDefault(o => o.Id == id);
+            return context.Orders.Include(o => o.Customer).Include(o => o.OrderLines).ThenInclude(ol => ol.Product).FirstOrDefault(o => o.Id == id);
         }
 
         public Order? Update(int id, Order updatedOrder)
