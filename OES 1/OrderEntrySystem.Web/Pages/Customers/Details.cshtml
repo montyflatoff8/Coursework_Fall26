@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "Customer Details";
 }
-
 <h1>Customer</h1>
+<div class="btn-toolbar p-2 border-bottom" role="toolbar" aria-label="Page actions">
+    <a asp-page="/Orders/Create" asp-route-customerId="@Model.Customer.Id" class="btn btn-sm btn-primary">Create Order</a>
+</div>
 <div class="card" style="max-width: 480px;">
     <div class="card-header">
         @Model.Customer.Name

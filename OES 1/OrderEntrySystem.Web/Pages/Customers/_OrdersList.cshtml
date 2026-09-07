@@ -7,6 +7,7 @@
         <tr>
             <th>Order ID</th>
             <th>Status</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -15,6 +16,9 @@
             <tr>
                 <td>@order.Id</td>
                 <td>@order.Status</td>
+                <td>
+                    <a asp-page="/Orders/Edit" asp-route-id="@order.Id" asp-route-customerId="@order.CustomerId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                </td>
             </tr>
         }
     </tbody>

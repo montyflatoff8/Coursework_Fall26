@@ -22,7 +22,12 @@ namespace OrderEntrySystem.Web.Pages.Orders
         [BindProperty]
         public Order Order { get; set; } = new();
 
-        public SelectList CustomerOptions { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int CustomerId { get; set; }
+
+        public string? CustomerName { get; set; }
+
         public SelectList OrderStatusOptions { get; set; } = new SelectList(Enum.GetValues(typeof(OrderStatus)).Cast<OrderStatus>());
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -31,23 +36,23 @@ namespace OrderEntrySystem.Web.Pages.Orders
 
             if (order == null)
             {
-                return NotFound(); // returns not found page, stops all logic here
+                return NotFound();
             }
 
-            var customers = await customerClient.GetCustomersAsync();
-            CustomerOptions = new SelectList(customers, "Id", "Name", Order.CustomerId);
-
             this.Order = order;
-            return Page(); // re-renders current page
+
+            var customer = await customerClient.GetCustomerAsync(CustomerId);
+            CustomerName = customer?.Name;
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
             {
-                // repopulate the dropdown before redisplaying — it won't survive postback on its own
-                var customers = await customerClient.GetCustomersAsync();
-                CustomerOptions = new SelectList(customers, "Id", "Name", Order.CustomerId);
+                var customer = await customerClient.GetCustomerAsync(CustomerId);
+                CustomerName = customer?.Name;
                 return Page();
             }
 
@@ -58,9 +63,7 @@ namespace OrderEntrySystem.Web.Pages.Orders
                 return NotFound();
             }
 
-            TempData["StatusMessage"] = "Changes saved";
-
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Customers/Details", new { id = CustomerId });
         }
     }
 }

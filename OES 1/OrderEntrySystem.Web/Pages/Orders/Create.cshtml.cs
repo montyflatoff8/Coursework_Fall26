@@ -28,24 +28,39 @@ namespace OrderEntrySystem.Web.Pages.Orders
 
         public SelectList CustomerOptions { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int? CustomerId { get; set; }
+
+        public string? CustomerName { get; set; }
+
         public async Task OnGetAsync()
         {
             var customers = await customerClient.GetCustomersAsync();
-            CustomerOptions = new SelectList(customers, "Id", "Name");
+            CustomerOptions = new SelectList(customers, "Id", "Name", CustomerId);
+
+            if (CustomerId.HasValue)
+            {
+                Order.CustomerId = CustomerId.Value;
+                var customer = await customerClient.GetCustomerAsync(CustomerId.Value);
+                CustomerName = customer?.Name;
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                // dropdown data doesn't survive postback on its own — rebuild it before redisplaying
                 var customers = await customerClient.GetCustomersAsync();
                 CustomerOptions = new SelectList(customers, "Id", "Name", Order.CustomerId);
-
                 return Page();
             }
 
             var created = await orderClient.CreateOrderAsync(this.Order);
+
+            if (CustomerId.HasValue)
+            {
+                return RedirectToPage("/Customers/Details", new { id = CustomerId.Value });
+            }
 
             return RedirectToPage("./Created", new { id = created.Id });
         }

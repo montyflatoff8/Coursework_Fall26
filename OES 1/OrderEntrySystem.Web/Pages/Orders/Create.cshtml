@@ -5,17 +5,29 @@
 }
     <div asp-validation-summary="All" class="text-danger"></div>
     <form method="post">
+        <input type="hidden" asp-for="CustomerId" />
+
+        @if (Model.CustomerId.HasValue)
+        {
+            <input type="hidden" asp-for="Order.CustomerId" />
+            <p>Customer: <strong>@Model.CustomerName</strong></p>
+        }
+        else
+        {
+            <div class="mb-3">
+                <label asp-for="Order.CustomerId" class="form-label">Customer</label>
+                <select asp-for="Order.CustomerId" asp-items="Model.CustomerOptions" class="form-select">
+                    <option value="">-- Select a customer --</option>
+                </select>
+                <span asp-validation-for="Order.CustomerId" class="text-danger"></span>
+            </div>
+        }
+
         <div class="mb-3">
-            <label asp-for="Order.Status" class="form-label">Order Status</label>
-            <select asp-for="Order.Status" asp-items="Model.OrderStatusOptions" class="form-select">
-				<option placeholder="">-- Select an order status --</option>
-            </select>
+            <label asp-for="Order.Status" class="form-label">Status</label>
+            <select asp-for="Order.Status" asp-items="Model.OrderStatusOptions" class="form-select"></select>
+            <span asp-validation-for="Order.Status" class="text-danger"></span>
         </div>
-        <div class="mb-3">
-            <label asp-for="Order.CustomerId" class="form-label">Customer</label>
-            <select asp-for="Order.CustomerId" asp-items="Model.CustomerOptions" class="form-select">
-				<option placeholder="">-- Select a customer --</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+
+        <button type="submit" class="btn btn-primary">Create Order</button>
     </form>

@@ -19,7 +19,7 @@ namespace OrderEntrySystem.Data.Repositories
 
         public IEnumerable<Customer> GetAll()
         {
-            return context.Customers.ToList();
+            return context.Customers.Include(c => c.Orders).ToList();
         }
 
         public Customer? Add(Customer customer)

@@ -27,11 +27,11 @@ namespace OrderEntrySystem.Core.Models
         [Required]
         public Condition Condition { get; set; }
 
+        public ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
-
 
         [ForeignKey("Location")]
         public int LocationId { get; set; }
