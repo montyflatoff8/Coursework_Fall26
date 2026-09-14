@@ -20,14 +20,22 @@ namespace OrderEntrySystem.Data.Repositories
         public IEnumerable<Product> GetAll()
         {
             return context.Products
-                .Include(p => p.ProductCategories)
+                .Include(p => p.ProductCategories).ThenInclude(pc => pc.Category)
                 .Include(p => p.Location)
                 .Where(p => !p.IsArchived)
-                .ToList(); // need .Include so that Ef knows to populate it.
+                .ToList();
         }
 
         public Product? Add(Product product)
         {
+            foreach (var categoryId in product.CategoryIds)
+            {
+                product.ProductCategories.Add(new ProductCategory
+                {
+                    CategoryId = categoryId
+                });
+            }
+
             context.Products.Add(product);
             context.SaveChanges();
             return GetById(product.Id);
@@ -36,7 +44,7 @@ namespace OrderEntrySystem.Data.Repositories
         public Product? GetById(int id)
         {
             return context.Products
-                .Include(p => p.ProductCategories)
+                .Include(p => p.ProductCategories).ThenInclude(pc => pc.Category)
                 .Include(p => p.Location)
                 .FirstOrDefault(p => p.Id == id);
         }
