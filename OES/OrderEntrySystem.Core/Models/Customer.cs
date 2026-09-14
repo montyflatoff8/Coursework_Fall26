@@ -15,5 +15,6 @@ namespace OrderEntrySystem.Core.Models
         public string Address { get; set; } = string.Empty;
 
         public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public bool IsArchived { get; set; }
     }
 }

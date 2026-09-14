@@ -44,7 +44,7 @@
                 <td>@p.Description</td>
                 <td>@p.Quantity</td>
                 <td>@p.Price</td>
-                <td>@p.Category?.Name</td>
+                <td>@string.Join(", ", p.ProductCategories.Select(pc => pc.Category?.Name))</td>
                 <td>@p.Condition</td>
                 <td>@p.Location?.Name</td>
                 <td>

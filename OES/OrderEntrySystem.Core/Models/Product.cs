@@ -27,14 +27,17 @@ namespace OrderEntrySystem.Core.Models
         [Required]
         public Condition Condition { get; set; }
 
-        public ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
+        public bool IsArchived { get; set; }
 
-        [ForeignKey("Category")]
-        public int CategoryId { get; set; }
-        public Category? Category { get; set; }
+        public ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         [ForeignKey("Location")]
         public int LocationId { get; set; }
         public Location? Location { get; set; }
+
+        public ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
+
+        [NotMapped]
+        public List<int> CategoryIds { get; set; } = new();
     }
 }

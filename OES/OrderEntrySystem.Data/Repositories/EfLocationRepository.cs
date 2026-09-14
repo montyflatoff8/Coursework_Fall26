@@ -19,7 +19,9 @@ namespace OrderEntrySystem.Data.Repositories
 
         public IEnumerable<Location> GetAll()
         {
-            return context.Locations.ToList();
+            return context.Locations
+                .Where(l => !l.IsArchived)
+                .ToList();
         }
 
         public Location? Add(Location location)
@@ -58,7 +60,7 @@ namespace OrderEntrySystem.Data.Repositories
 
             if (location != null)
             {
-                context.Locations.Remove(location);
+                location.IsArchived = true;
                 context.SaveChanges();
             }
             return location;

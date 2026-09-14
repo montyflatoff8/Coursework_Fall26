@@ -59,9 +59,9 @@ namespace OrderEntrySystem.Api.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Product> Delete(int id)
         {
-            var deleted = products.Delete(id);
+            var archived = products.Delete(id);
 
-            if (deleted == null)
+            if (archived == null)
             {
                 return NotFound();
             }

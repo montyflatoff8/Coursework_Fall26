@@ -19,7 +19,10 @@ namespace OrderEntrySystem.Data.Repositories
 
         public IEnumerable<Customer> GetAll()
         {
-            return context.Customers.Include(c => c.Orders).ToList();
+            return context.Customers
+                .Include(c => c.Orders)
+                .Where(c => !c.IsArchived)
+                .ToList();
         }
 
         public Customer? Add(Customer customer)
@@ -57,7 +60,7 @@ namespace OrderEntrySystem.Data.Repositories
 
             if (customer != null)
             {
-                context.Customers.Remove(customer);
+                customer.IsArchived = true;
                 context.SaveChanges();
             }
             return customer;

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderEntrySystem.Data.DataAccess;
 
@@ -10,9 +11,11 @@ using OrderEntrySystem.Data.DataAccess;
 namespace OrderEntrySystem.Data.Migrations
 {
     [DbContext(typeof(OESContext))]
-    partial class OESContextModelSnapshot : ModelSnapshot
+    [Migration("20260914043206_AddedAllIsArchived")]
+    partial class AddedAllIsArchived
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,6 +157,9 @@ namespace OrderEntrySystem.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Condition")
                         .HasColumnType("int");
 
@@ -179,27 +185,11 @@ namespace OrderEntrySystem.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("LocationId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("OrderEntrySystem.Core.Models.ProductCategory", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("bit");
-
-                    b.HasKey("ProductId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("OrderEntrySystem.Core.Models.Order", b =>
@@ -234,37 +224,26 @@ namespace OrderEntrySystem.Data.Migrations
 
             modelBuilder.Entity("OrderEntrySystem.Core.Models.Product", b =>
                 {
+                    b.HasOne("OrderEntrySystem.Core.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("OrderEntrySystem.Core.Models.Location", "Location")
                         .WithMany("Products")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("OrderEntrySystem.Core.Models.ProductCategory", b =>
-                {
-                    b.HasOne("OrderEntrySystem.Core.Models.Category", "Category")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OrderEntrySystem.Core.Models.Product", "Product")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
 
-                    b.Navigation("Product");
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("OrderEntrySystem.Core.Models.Category", b =>
                 {
-                    b.Navigation("ProductCategories");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("OrderEntrySystem.Core.Models.Customer", b =>
@@ -285,8 +264,6 @@ namespace OrderEntrySystem.Data.Migrations
             modelBuilder.Entity("OrderEntrySystem.Core.Models.Product", b =>
                 {
                     b.Navigation("OrderLines");
-
-                    b.Navigation("ProductCategories");
                 });
 #pragma warning restore 612, 618
         }

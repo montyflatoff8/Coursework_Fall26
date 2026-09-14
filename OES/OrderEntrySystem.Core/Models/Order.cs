@@ -21,5 +21,6 @@ namespace OrderEntrySystem.Core.Models
         public Customer? Customer { get; set; }
 
         public ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
+        public bool IsArchived { get; set; }
     }
 }

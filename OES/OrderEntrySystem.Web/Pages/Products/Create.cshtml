@@ -29,11 +29,10 @@
             <span asp-validation-for="Product.LocationId" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="Product.CategoryId" class="form-label">Category</label>
-            <select asp-for="Product.CategoryId" asp-items="Model.CategoryOptions" class="form-select">
-                <option placeholder="">-- Select a category --</option>
+            <label asp-for="Product.CategoryIds" class="form-label">Categories</label>
+            <select asp-for="Product.CategoryIds" asp-items="Model.CategoryOptions" class="form-select" multiple size="6">
             </select>
-            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+            <span asp-validation-for="Product.CategoryIds" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Product.Condition" class="form-label">Condition</label>

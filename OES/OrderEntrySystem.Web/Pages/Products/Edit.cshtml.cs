@@ -40,7 +40,7 @@ namespace OrderEntrySystem.Web.Pages.Products
             }
 
             var categories = await categoryClient.GetCategoriesAsync();
-            CategoryOptions = new SelectList(categories, "Id", "Name", Product.CategoryId);
+            CategoryOptions = new SelectList(categories, "Id", "Name");
 
             var locations = await locationClient.GetLocationsAsync();
             LocationOptions = new SelectList(locations, "Id", "Name", Product.LocationId);
@@ -55,7 +55,7 @@ namespace OrderEntrySystem.Web.Pages.Products
             {
                 // repopulate the dropdown before redisplaying — it won't survive postback on its own
                 var categories = await categoryClient.GetCategoriesAsync();
-                CategoryOptions = new SelectList(categories, "Id", "Name", Product.CategoryId);
+                CategoryOptions = new SelectList(categories, "Id", "Name");
                 return Page();
             }
 

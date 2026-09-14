@@ -48,7 +48,7 @@ namespace OrderEntrySystem.Web.Pages.Products
             {
                 // dropdown data doesn't survive postback on its own — rebuild it before redisplaying
                 var categories = await categoryClient.GetCategoriesAsync();
-                CategoryOptions = new SelectList(categories, "Id", "Name", Product.CategoryId);
+                CategoryOptions = new SelectList(categories, "Id", "Name");
 
                 var locations = await locationClient.GetLocationsAsync();
                 LocationOptions = new SelectList(locations, "Id", "Name", Product.LocationId);

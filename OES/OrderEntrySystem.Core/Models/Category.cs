@@ -11,6 +11,11 @@ namespace OrderEntrySystem.Core.Models
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string Name { get; set; } = string.Empty;
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+
+        public bool IsArchived { get; set; }
+
+        public ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
+
+        public override string ToString() => Name;
     }
 }

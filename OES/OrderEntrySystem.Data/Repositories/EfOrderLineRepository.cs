@@ -20,12 +20,14 @@ namespace OrderEntrySystem.Data.Repositories
         {
             return context.OrderLines
                 .Include(ol => ol.Product)
+                .Where(ol => !ol.IsArchived)
                 .ToList();
         }
 
         public IEnumerable<int> GetOrderIdsWithLines()
         {
             return context.OrderLines
+                .Where(ol => !ol.IsArchived)
                 .Select(ol => ol.OrderId)
                 .Distinct()
                 .ToList();
@@ -59,12 +61,13 @@ namespace OrderEntrySystem.Data.Repositories
 
         public OrderLine? Delete(int id)
         {
-            var existing = context.OrderLines.FirstOrDefault(ol => ol.Id == id);
-            if (existing == null) return null;
-
-            context.OrderLines.Remove(existing);
-            context.SaveChanges();
-            return existing;
+            var orderLine = context.OrderLines.FirstOrDefault(ol => ol.Id == id);
+            if (orderLine != null)
+            {
+                orderLine.IsArchived = true;
+                context.SaveChanges();
+            }
+            return orderLine;
         }
     }
 }

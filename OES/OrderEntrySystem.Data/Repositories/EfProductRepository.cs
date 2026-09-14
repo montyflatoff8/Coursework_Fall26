@@ -19,7 +19,11 @@ namespace OrderEntrySystem.Data.Repositories
 
         public IEnumerable<Product> GetAll()
         {
-            return context.Products.Include(p => p.Category).Include(p => p.Location).ToList(); // need .Include so that Ef knows to populate it.
+            return context.Products
+                .Include(p => p.ProductCategories)
+                .Include(p => p.Location)
+                .Where(p => !p.IsArchived)
+                .ToList(); // need .Include so that Ef knows to populate it.
         }
 
         public Product? Add(Product product)
@@ -31,7 +35,10 @@ namespace OrderEntrySystem.Data.Repositories
 
         public Product? GetById(int id)
         {
-            return context.Products.Include(p => p.Category).Include(p => p.Location).FirstOrDefault(p => p.Id == id);
+            return context.Products
+                .Include(p => p.ProductCategories)
+                .Include(p => p.Location)
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public Product? Update(int id, Product updatedProduct)
@@ -47,7 +54,6 @@ namespace OrderEntrySystem.Data.Repositories
             existing.Description = updatedProduct.Description;
             existing.Quantity = updatedProduct.Quantity;
             existing.Price = updatedProduct.Price;
-            existing.CategoryId = updatedProduct.CategoryId;
             existing.Condition = updatedProduct.Condition;
             existing.LocationId = updatedProduct.LocationId;
 
@@ -61,8 +67,8 @@ namespace OrderEntrySystem.Data.Repositories
 
             if (product!= null)
             {
-                context.Products.Remove(product);
-                context.SaveChanges();
+                product.IsArchived = true; //mark it as archived
+                context.SaveChanges(); //save the changes to the database
             }
             return product;
         }

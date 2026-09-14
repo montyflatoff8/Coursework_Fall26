@@ -21,5 +21,6 @@ namespace OrderEntrySystem.Core.Models
         public string State { get; set; } = string.Empty;
 
         public ICollection<Product> Products { get; set; } = new List<Product>();
+        public bool IsArchived { get; set; }
     }
 }
