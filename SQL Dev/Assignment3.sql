@@ -1,4 +1,4 @@
-1)	create table #State (
+create table #State (
 Id int,
 State VARCHAR(30)
 );
@@ -46,12 +46,30 @@ FROM #City c
 JOIN #State s ON c.StateId = s.Id
 
 UPDATE #CityState
-SET City = CASE 
-                WHEN Id = 1 THEN (SELECT City FROM #CityState WHERE Id = 2)
-                WHEN Id = 2 THEN (SELECT City FROM #CityState WHERE Id = 1)
+SET State = CASE 
+                WHEN Id = 1 THEN (SELECT State FROM #CityState WHERE Id = 6)
+                WHEN Id = 6 THEN (SELECT State FROM #CityState WHERE Id = 1)
             END
-WHERE Id IN (1, 2);
+WHERE Id IN (1, 6);
 
-select * from #State
-select * from #City
-Select * from #CityState
+CREATE TABLE #CityChanges (
+    City VARCHAR(50),
+    NewState VARCHAR(30)
+);
+
+INSERT INTO #CityChanges (City, NewState)
+VALUES ('San Jose', 'Montana');
+
+UPDATE cs
+SET cs.State = cc.NewState
+FROM #CityState cs
+JOIN #CityChanges cc ON cs.City = cc.City;
+
+ALTER TABLE #City
+ADD DateAdded DATETIME DEFAULT '1/1/18';
+
+INSERT INTO #City (Id, StateId, City)
+VALUES (11, 1, 'Madison');
+
+INSERT INTO #City (Id, StateId, City, DateAdded)
+VALUES (12, 6, 'Los Angeles', '6/1/18');
