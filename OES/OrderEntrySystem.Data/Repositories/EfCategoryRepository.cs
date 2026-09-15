@@ -52,12 +52,22 @@ namespace OrderEntrySystem.Data.Repositories
 
         public Category? Delete(int id)
         {
-            var category = GetByID(id); //grab the matching category from the database
+            var category = context.Categories
+                .Include(c => c.ProductCategories)
+                .FirstOrDefault(c => c.Id == id);
+
             if (category != null)
             {
                 category.IsArchived = true;
+
+                foreach (var link in category.ProductCategories.Where(pc => !pc.IsArchived))
+                {
+                    link.IsArchived = true;
+                }
+
                 context.SaveChanges();
             }
+
             return category;
         }
     }

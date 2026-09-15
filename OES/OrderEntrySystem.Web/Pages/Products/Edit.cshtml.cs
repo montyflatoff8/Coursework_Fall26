@@ -10,9 +10,7 @@ namespace OrderEntrySystem.Web.Pages.Products
     public class EditModel : PageModel
     {
         private readonly ProductApiClient productClient;
-
         private readonly CategoryApiClient categoryClient;
-
         private readonly LocationApiClient locationClient;
 
         public EditModel(ProductApiClient productClient, CategoryApiClient categoryClient, LocationApiClient locationClient)
@@ -25,10 +23,9 @@ namespace OrderEntrySystem.Web.Pages.Products
         [BindProperty]
         public Product Product { get; set; } = new();
 
-        public SelectList CategoryOptions { get; set; }
+        public IEnumerable<Category> AvailableCategories { get; set; } = new List<Category>();
         public SelectList ConditionOptions { get; set; } = new SelectList(Enum.GetValues(typeof(Condition)).Cast<Condition>());
         public SelectList LocationOptions { get; set; }
-
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -36,26 +33,32 @@ namespace OrderEntrySystem.Web.Pages.Products
 
             if (product == null)
             {
-                return NotFound(); // returns not found page, stops all logic here
+                return NotFound();
             }
 
-            var categories = await categoryClient.GetCategoriesAsync();
-            CategoryOptions = new SelectList(categories, "Id", "Name");
+            // Pre-select this Product's current, active Categories
+            product.CategoryIds = product.ProductCategories
+                .Where(pc => !pc.IsArchived)
+                .Select(pc => pc.CategoryId)
+                .ToList();
+
+            AvailableCategories = await categoryClient.GetCategoriesAsync();
 
             var locations = await locationClient.GetLocationsAsync();
-            LocationOptions = new SelectList(locations, "Id", "Name", Product.LocationId);
+            LocationOptions = new SelectList(locations, "Id", "Name", product.LocationId);
 
             this.Product = product;
-            return Page(); // re-renders current page
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
             {
-                // repopulate the dropdown before redisplaying — it won't survive postback on its own
-                var categories = await categoryClient.GetCategoriesAsync();
-                CategoryOptions = new SelectList(categories, "Id", "Name");
+                AvailableCategories = await categoryClient.GetCategoriesAsync();
+
+                var locations = await locationClient.GetLocationsAsync();
+                LocationOptions = new SelectList(locations, "Id", "Name", Product.LocationId);
                 return Page();
             }
 

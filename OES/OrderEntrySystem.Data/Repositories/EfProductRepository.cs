@@ -51,7 +51,9 @@ namespace OrderEntrySystem.Data.Repositories
 
         public Product? Update(int id, Product updatedProduct)
         {
-            var existing = context.Products.FirstOrDefault(p => p.Id == id);
+            var existing = context.Products
+                .Include(p => p.ProductCategories)
+                .FirstOrDefault(p => p.Id == id);
 
             if (existing == null)
             {
@@ -65,19 +67,54 @@ namespace OrderEntrySystem.Data.Repositories
             existing.Condition = updatedProduct.Condition;
             existing.LocationId = updatedProduct.LocationId;
 
+            var selectedCategoryIds = updatedProduct.CategoryIds ?? new List<int>();
+
+            // Categories that were selected before but aren't anymore: archive the bridge row
+            foreach (var link in existing.ProductCategories.Where(pc => !pc.IsArchived))
+            {
+                if (!selectedCategoryIds.Contains(link.CategoryId))
+                {
+                    link.IsArchived = true;
+                }
+            }
+
+            // Categories that are selected now: add a new bridge row, or reactivate an archived one
+            foreach (var categoryId in selectedCategoryIds)
+            {
+                var link = existing.ProductCategories.FirstOrDefault(pc => pc.CategoryId == categoryId);
+
+                if (link == null)
+                {
+                    existing.ProductCategories.Add(new ProductCategory { CategoryId = categoryId });
+                }
+                else if (link.IsArchived)
+                {
+                    link.IsArchived = false;
+                }
+            }
+
             context.SaveChanges();
             return GetById(id);
         }
 
         public Product? Delete(int id)
         {
-            var product = context.Products.FirstOrDefault(p => p.Id == id); //grab the matching product from the database
+            var product = context.Products
+                .Include(p => p.ProductCategories)
+                .FirstOrDefault(p => p.Id == id);
 
-            if (product!= null)
+            if (product != null)
             {
-                product.IsArchived = true; //mark it as archived
-                context.SaveChanges(); //save the changes to the database
+                product.IsArchived = true;
+
+                foreach (var link in product.ProductCategories.Where(pc => !pc.IsArchived))
+                {
+                    link.IsArchived = true;
+                }
+
+                context.SaveChanges();
             }
+
             return product;
         }
     }
