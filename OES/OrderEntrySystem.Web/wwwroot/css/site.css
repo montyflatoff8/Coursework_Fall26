@@ -72,11 +72,14 @@
 
 /* ---------- Base ---------- */
 
-html, body {
+html {
     height: 100%;
 }
 
 body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
     font-size: 0.95rem;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
@@ -290,8 +293,6 @@ button.accept-policy {
 }
 
 .footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     white-space: nowrap;
     line-height: 60px;

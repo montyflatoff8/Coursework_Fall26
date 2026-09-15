@@ -27,7 +27,7 @@ namespace OrderEntrySystem.Web.Pages.Products
         [BindProperty]
         public Product Product { get; set; } = new(); // Starts as an empty Product object when page loads.
 
-        public SelectList CategoryOptions { get; set; }
+        public IEnumerable<Category> AvailableCategories { get; set; } = new List<Category>();
 
         public SelectList ConditionOptions { get; set; } = new SelectList(Enum.GetValues(typeof(Condition)).Cast<Condition>());
 
@@ -35,8 +35,7 @@ namespace OrderEntrySystem.Web.Pages.Products
 
         public async Task OnGetAsync()
         {
-            var categories = await categoryClient.GetCategoriesAsync();
-            CategoryOptions = new SelectList(categories, "Id", "Name");
+            AvailableCategories = await categoryClient.GetCategoriesAsync();
 
             var locations = await locationClient.GetLocationsAsync();
             LocationOptions = new SelectList(locations, "Id", "Name");
@@ -47,8 +46,7 @@ namespace OrderEntrySystem.Web.Pages.Products
             if (!ModelState.IsValid)
             {
                 // dropdown data doesn't survive postback on its own — rebuild it before redisplaying
-                var categories = await categoryClient.GetCategoriesAsync();
-                CategoryOptions = new SelectList(categories, "Id", "Name");
+                AvailableCategories = await categoryClient.GetCategoriesAsync();
 
                 var locations = await locationClient.GetLocationsAsync();
                 LocationOptions = new SelectList(locations, "Id", "Name", Product.LocationId);
